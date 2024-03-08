@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="imagenes/charlar.png">
+    <title>Chat V.2</title>
+</head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-image: url(imagenes/DarkBackground.svg);
+            background-repeat: repeat;
+            background-size: auto;
+        }
+        .global{
+            position: absolute; /*al hacerlo absoluto me permite tener control del 
+            ancho y alto total del navegador parar manejar el heigt con porcentajes*/
+            height: 100%;
+        }
+
+        .chatContenedor{
+            
+            height: 95%;
+        }
+
+        .cabecera{
+            background: #333333;
+            height: 5%;
+        }
+        .windowChat{
+            background: rgba(255, 255, 255, 0.01);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            border: 1.5px solid rgba(209, 213, 219, 0.3);
+            background: none;
+            height: 90%;
+        }
+
+        #chat-window{
+          height: 99%;  
+        }
+        #output{
+            max-height: 75vh;
+            overflow: auto;
+        }
+
+        .container_emojis{
+            display: none;
+            grid-template-columns: repeat(10, 1fr);
+            cursor: pointer;
+        }
+        
+        #mensaje, #mensaje::placeholder{
+            color: #999
+        }
+        @media (max-width:800px) {
+            .chatContenedor{
+            height: 100%;
+            }
+            .cabecera{
+            height: 7%;
+            }
+            .windowChat{
+            height: 88%;
+            }
+        }
+
+    </style>
+<body>
+    <div class="container-fluid global"><!--Contenedor de todo-->
+        <div class="row mt-3 d-none d-lg-block"></div><!--fila que hace despega el chat-->
+        <div class="row chatContenedor"><!--fila principal que contiene todo el chat-->
+        <div class="col-0 col-lg-1 d-none d-lg-block"></div><!--lateral izquierdo-->
+        <div class="col-12 col-lg-10"><!--Inicio del contenedor de todo el chat-->
+            <div class="row rounded-top cabecera"><!--Inicio Cabecera-->
+                <div class="col-3 "><!--inicio letras Rt Chat-->
+                    <p class="d-lg-none fs-6 text-light mt-1">RT Chat</p>
+                    <p class="d-none d-lg-block h2 text-light">RT Chat</p>
+                </div><!--Fin letras Rt Chat-->
+                <div class="col-7"><!--Inicio campo para ingresar el nombre-->
+                        <input type="text" id="usuario" placeholder="Ingresar Nombre De Usuario" class="form-control mt-1" aria-describedby="addon-wrapping">
+                </div><!--Fin campo para ingresar el nombre-->
+                <div class="col-2 d-flex justify-content-end"><!--InicioElegir modo noche modo dia-->
+                    <button type="button" id="dino" style="background: #333333;border: none;color: inherit;"><img src="imagenes/dark-mode.png" alt="No se enconro imagen" width="25px" height="25px"></button>
+                </div><!--Fin Elegir modo noche modo dia-->
+            </div><!--Fin Cabecera-->
+            <div class="row windowChat"><!--Inicio Ventana Chat-->
+                <div class="col-12">
+                    <div id="chat-window">
+                        <div id="output" class="overflow-auto row"></div>
+                        <div id="actions"></div>
+                        <div class="container_emojis" id="conemo">
+                            <span id="emoji">😀</span><span id="emoji">😄</span><span id="emoji">😁</span><span id="emoji">😂</span><span id="emoji">🤣</span><span id="emoji">😊</span><span id="emoji">😍</span><span id="emoji">🥰</span>
+                            <span id="emoji">🤭</span><span class="emoji">😐</span><span class="emoji">🛠️</span><span class="emoji">🛡️</span><span class="emoji">🚀</span><span class="emoji">🔧</span><span class="emoji">⚙️</span><span class="emoji">🎨</span>
+                            <span class="emoji">💻</span><span class="emoji">📱</span><span class="emoji">🔍</span><span class="emoji">🔒</span>
+                        </div>
+                    </div>
+                </div>  
+            </div><!--Fin Ventana Chat-->   
+            <div class="row" style="background: #333333;"><!--Inicio Entrada de Texto-->
+                <div class="col-8 col-lg-10">
+                    <input type="text" id="mensaje" placeholder="Escribe un mensaje..." class="form-control p-2" style="border: none; background-color: transparent; padding: 0; margin: 0; outline: none; color: #999;">
+                </div>
+                <div class="col-2 col-lg-1 mt-1"><button id="emojiss" style="border: none; background-color: transparent; padding: 0; margin: 0; outline: none;"><img src="imagenes/emoji.svg" alt="no ta" width="30px" height="30px"></button></div>
+                <div class="col-1 col-lg-1 mt-1">
+                    <button id="send" style="border: none;
+                    background-color: transparent;
+                    color: inherit;"><img src="imagenes/send.svg" alt="no se encontro"  width="30px" height="30px"></button>
+                </div>
+            </div><!--Fin Entrada de Texto-->
+        </div><!--Fin del contenedor de todo el chat-->
+        <div class="col-0 col-lg-1 d-none d-lg-block"></div><!--lateral derecho-->
+        </div>
+    </div>
+    <!--js-->
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
